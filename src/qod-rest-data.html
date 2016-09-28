@@ -1,0 +1,60 @@
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="qod-rest-data">
+  <template>
+    <iron-ajax
+        auto
+        url="{{resturl}}"
+        params="{{urlparams}}"
+        handle-as="json"
+        on-response="handleResponse"
+        last-response="handleResponse"
+        debounce-duration="300"
+        verbose=true>
+      </iron-ajax>
+
+  </template>
+
+  <script>
+    Polymer(
+    {
+      is: 'qod-rest-data',
+      properties:
+      {
+        resturl:
+        {
+          type: String,
+          value: "http://quotes.rest/qod.json",
+          notify: true
+        },
+        category:
+        {
+          type: String,
+          value:"love",
+          notify: true
+        },
+        qoddata:
+        {
+          type: Array,
+          notify: true
+        },
+        urlparams:
+        {
+          computed: 'computeParam(category)'
+        }
+    },
+
+    computeParam: function(category)
+    {
+      return {"category": category}
+    },
+
+    handleResponse: function (data)
+    {
+      this.qoddata=[];
+      responsedata = data.detail.response;
+      this.qoddata = responsedata.contents.quotes[0];
+    }
+    });
+  </script>
+</dom-module>

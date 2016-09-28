@@ -1,0 +1,85 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu-light.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/iron-icons/social-icons.html">
+<link rel="import" href="../bower_components/iron-icons/image-icons.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="qod-rest-data.html">
+
+<dom-module id="my-view1">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+      paper-card.white {
+        --paper-card-header-color: #fff;
+      }
+
+      paper-dropdown-menu-light{
+          --paper-dropdown-menu-light:{
+            max-width: 100%;
+          };
+      }
+
+      paper-item{
+          --paper-item:{
+            white-space: nowrap;
+            width: 100%;
+            }
+      }
+    </style>
+    <template is="dom-bind">
+        <qod-rest-data qoddata="{{qoddata}}" category="{{category}}"></qod-rest-data>
+
+        <paper-card elevation="3" heading={{qoddata.author}} image={{qoddata.background}} alt={{qoddata.author}} class="white">
+          <div class="card-content">
+            {{qoddata.quote}}
+          </div>
+          <div class="card-actions">
+            <paper-icon-button icon="social:plus-one"></paper-icon-button>
+            <paper-icon-button icon="social:share"></paper-icon-button>
+            <paper-icon-button icon="image:rotate-right"></paper-icon-button>
+            <div>
+              <span>
+              <paper-dropdown-menu-light label="Choose your category here" allowOutsideScroll=true>
+                <paper-listbox class="dropdown-content" selected="{{category}}" attr-for-selected="data-value">
+                  <paper-item data-value="inspire">Inspirational</paper-item>
+                  <paper-item data-value="management">Management</paper-item>
+                  <paper-item data-value="funny">Funny quotes</paper-item>
+                  <paper-item data-value="love">Love quotes</paper-item>
+                  <paper-item data-value="sports">Sports</paper-item>
+                  <paper-item data-value="life">Life quotes</paper-item>
+                  <paper-item data-value="art">Art quotes</paper-item>
+                </paper-listbox>
+              </paper-dropdown-menu-light>
+            </span>
+          </div>
+        </paper-card>
+      </template>
+  </template>
+
+  <script>
+    Polymer
+    (
+      {
+        is: 'my-view1'
+      }
+    );
+  </script>
+</dom-module>
